@@ -50,16 +50,16 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│  HeaderTicker — BTC/USDT | Giá | 24h High/Low | Volume         │
+│  HeaderTicker — BTC/USDT | Giá | 24h High/Low | Volume          │
 ├──────────────┬──────────────────────────────┬───────────────────┤
 │              │  [Đồ thị] [Thông tin] [...]  │                   │
-│  ORDER BOOK  │  [🤖 Analyze ▶]              │   WATCHLIST       │
+│  ORDER BOOK  │  [🤖 Analyze ▶]              │   WATCHLIST      │
 │              ├──────────────────────────────┤                   │
-│  Bids/Asks   │   TRADINGVIEW CHART WIDGET   ├───────────────────┤
-│              │   (chart + volume + MA)      │   TRADE LIST      │
+│  Bids/Asks   │   TRADINGVIEW CHART WIDGET   ┤
+│              │   (chart + volume + MA)      │                   │
 │              │                              │                   │
 └──────────────┴──────────────────────────────┴───────────────────┘
-│  BottomTicker — ETH | SOL | BNB | XRP | NEAR ...               │
+│  BottomTicker — ETH | SOL | BNB | XRP | NEAR ...                │
 └─────────────────────────────────────────────────────────────────┘
 
                   ↕ khi nhấn Analyze
