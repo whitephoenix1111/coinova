@@ -1,9 +1,5 @@
 "use client";
 
-// ============================================================
-// TradingViewChart — Embed TradingView Widget
-// ============================================================
-
 import { useEffect, useRef } from "react";
 import { useDashboardStore } from "@/store/useDashboardStore";
 
@@ -14,147 +10,141 @@ declare global {
   }
 }
 
-export default function TradingViewChart() {
-  const activeSymbol = useDashboardStore((s) => s.activeSymbol);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const widgetRef = useRef<unknown>(null);
+// ─── TVWidget: React never touches the inner div after mount ──
+function TVWidget({ symbol }: { symbol: string }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
 
-    // Clear old widget
-    container.innerHTML = "";
+    // Create a plain div OUTSIDE React's control
+    const container = document.createElement("div");
+    const containerId = `tv_${symbol.toLowerCase()}_${Date.now()}`;
+    container.id = containerId;
+    container.style.width = "100%";
+    container.style.height = "100%";
+    wrapper.appendChild(container);
 
-    const loadWidget = () => {
+    const init = () => {
       if (!window.TradingView) return;
-      widgetRef.current = new window.TradingView.widget({
-        autosize: true,
-        symbol: `BINANCE:${activeSymbol}`,
-        interval: "15",
-        timezone: "Asia/Ho_Chi_Minh",
-        theme: "dark",
-        style: "1",
-        locale: "en",
-        toolbar_bg: "#0d1117",
-        enable_publishing: false,
-        hide_top_toolbar: false,
-        hide_legend: false,
-        save_image: false,
-        container_id: "tv_chart_container",
-        backgroundColor: "#0d1117",
-        gridColor: "rgba(30, 42, 53, 0.8)",
-        studies: ["STD;MACD", "STD;RSI"],
-        withdateranges: false,
-        hide_side_toolbar: true,
-        allow_symbol_change: false,
-        details: false,
-        hotlist: false,
-        calendar: false,
-        show_popup_button: false,
-      });
+      try {
+        new window.TradingView.widget({
+          autosize: true,
+          symbol: `BINANCE:${symbol}`,
+          interval: "15",
+          timezone: "Asia/Ho_Chi_Minh",
+          theme: "dark",
+          style: "1",
+          locale: "en",
+          toolbar_bg: "#0d1117",
+          enable_publishing: false,
+          save_image: false,
+          container_id: containerId,
+          backgroundColor: "#0d1117",
+          gridColor: "rgba(30, 42, 53, 0.8)",
+          studies: ["STD;MACD", "STD;RSI"],
+          hide_side_toolbar: true,
+          allow_symbol_change: false,
+          details: false,
+          hotlist: false,
+          calendar: false,
+        });
+      } catch (e) {
+        console.error("TradingView widget error:", e);
+      }
     };
 
-    // Load TradingView script if not loaded
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+
     if (window.TradingView) {
-      loadWidget();
+      init();
+    } else if (!document.getElementById("tv-script")) {
+      const script = document.createElement("script");
+      script.id = "tv-script";
+      script.src = "https://s3.tradingview.com/tv.js";
+      script.async = true;
+      script.onload = init;
+      document.head.appendChild(script);
     } else {
-      const existing = document.getElementById("tv-script");
-      if (!existing) {
-        const script = document.createElement("script");
-        script.id = "tv-script";
-        script.src = "https://s3.tradingview.com/tv.js";
-        script.async = true;
-        script.onload = loadWidget;
-        document.head.appendChild(script);
-      } else {
-        existing.addEventListener("load", loadWidget);
-      }
+      intervalId = setInterval(() => {
+        if (window.TradingView) {
+          if (intervalId) clearInterval(intervalId);
+          init();
+        }
+      }, 100);
     }
 
+    // Cleanup: remove the container we created (not managed by React)
     return () => {
-      if (container) container.innerHTML = "";
+      if (intervalId) clearInterval(intervalId);
+      try {
+        if (wrapper.contains(container)) {
+          wrapper.removeChild(container);
+        }
+      } catch {
+        // ignore
+      }
     };
-  }, [activeSymbol]);
+  }, [symbol]);
+
+  // This div is just an anchor — React only manages THIS element
+  // The actual TV content lives in a child we create imperatively
+  return (
+    <div
+      ref={wrapperRef}
+      style={{ width: "100%", height: "calc(100% - 36px)" }}
+    />
+  );
+}
+
+// ─── Main Chart Component ─────────────────────────────────────
+export default function TradingViewChart() {
+  const activeSymbol = useDashboardStore((s) => s.activeSymbol);
 
   return (
-    <div className="relative w-full h-full" style={{ background: "var(--bg-panel)" }}>
-      {/* Tab bar above chart */}
-      <div
-        className="flex items-center gap-1 px-3"
-        style={{
-          height: "36px",
-          borderBottom: "1px solid var(--border-subtle)",
-          background: "var(--bg-elevated)",
-        }}
-      >
+    <div style={{ position: "relative", width: "100%", height: "100%", background: "var(--bg-panel)" }}>
+      {/* Tab bar */}
+      <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "0 12px", height: "36px", borderBottom: "1px solid var(--border-subtle)", background: "var(--bg-elevated)" }}>
         {["Chart", "Info", "Trading"].map((tab, i) => (
-          <button
-            key={tab}
-            className="px-3 py-1 text-xs rounded transition-colors"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 500,
-              color: i === 0 ? "var(--accent)" : "var(--text-secondary)",
-              background: i === 0 ? "var(--accent-glow)" : "transparent",
-              border: i === 0 ? "1px solid rgba(0,212,255,0.2)" : "1px solid transparent",
-              cursor: "pointer",
-            }}
-          >
+          <button key={tab} style={{ fontFamily: "var(--font-display)", fontWeight: 500, fontSize: "12px", padding: "4px 12px", borderRadius: "4px", color: i === 0 ? "var(--accent)" : "var(--text-secondary)", background: i === 0 ? "var(--accent-glow)" : "transparent", border: i === 0 ? "1px solid rgba(0,212,255,0.2)" : "1px solid transparent", cursor: "pointer" }}>
             {tab}
           </button>
         ))}
-
-        {/* Analyze button */}
-        <div className="flex-1" />
+        <div style={{ flex: 1 }} />
         <AnalyzeButton />
       </div>
 
-      {/* TradingView container */}
-      <div
-        id="tv_chart_container"
-        ref={containerRef}
-        style={{ width: "100%", height: "calc(100% - 36px)" }}
-      />
+      {/* key=activeSymbol forces full unmount+remount of TVWidget on symbol change */}
+      <TVWidget key={activeSymbol} symbol={activeSymbol} />
     </div>
   );
 }
 
-// ─── Analyze Button (inline để tránh circular import) ───────
-
+// ─── Analyze Button ───────────────────────────────────────────
 function AnalyzeButton() {
-  const { ticker, orderBook, trades, isAnalyzing, openModal, setAIAnalysis, setIsAnalyzing } =
-    useDashboardStore((s) => ({
-      ticker: s.ticker,
-      orderBook: s.orderBook,
-      trades: s.trades,
-      isAnalyzing: s.isAnalyzing,
-      openModal: s.openModal,
-      setAIAnalysis: s.setAIAnalysis,
-      setIsAnalyzing: s.setIsAnalyzing,
-    }));
-
-  const activeSymbol = useDashboardStore((s) => s.activeSymbol);
+  const activeSymbol   = useDashboardStore((s) => s.activeSymbol);
+  const ticker         = useDashboardStore((s) => s.ticker);
+  const orderBook      = useDashboardStore((s) => s.orderBook);
+  const trades         = useDashboardStore((s) => s.trades);
+  const isAnalyzing    = useDashboardStore((s) => s.isAnalyzing);
+  const openModal      = useDashboardStore((s) => s.openModal);
+  const setAIAnalysis  = useDashboardStore((s) => s.setAIAnalysis);
+  const setIsAnalyzing = useDashboardStore((s) => s.setIsAnalyzing);
 
   const handleAnalyze = async () => {
     if (!ticker || !orderBook || isAnalyzing) return;
     setIsAnalyzing(true);
-
+    openModal();
     try {
       const res = await fetch("/api/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          symbol: activeSymbol,
-          ticker,
-          orderBook,
-          recentTrades: trades.slice(0, 20),
-        }),
+        body: JSON.stringify({ symbol: activeSymbol, ticker, orderBook, recentTrades: trades.slice(0, 20) }),
       });
       if (!res.ok) throw new Error("Analysis failed");
       const data = await res.json();
       setAIAnalysis(data);
-      openModal();
     } catch (err) {
       console.error(err);
     } finally {
@@ -166,35 +156,12 @@ function AnalyzeButton() {
     <button
       onClick={handleAnalyze}
       disabled={isAnalyzing || !ticker}
-      className="flex items-center gap-2 px-3 py-1 rounded text-xs transition-all"
-      style={{
-        fontFamily: "var(--font-display)",
-        fontWeight: 600,
-        background: isAnalyzing ? "var(--bg-active)" : "linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05))",
-        border: "1px solid rgba(0,212,255,0.3)",
-        color: isAnalyzing ? "var(--text-secondary)" : "var(--accent)",
-        cursor: isAnalyzing || !ticker ? "not-allowed" : "pointer",
-        opacity: !ticker ? 0.5 : 1,
-      }}
+      style={{ fontFamily: "var(--font-display)", fontWeight: 600, display: "flex", alignItems: "center", gap: "6px", padding: "4px 12px", borderRadius: "4px", background: isAnalyzing ? "var(--bg-active)" : "linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05))", border: "1px solid rgba(0,212,255,0.3)", color: isAnalyzing ? "var(--text-secondary)" : "var(--accent)", cursor: isAnalyzing || !ticker ? "not-allowed" : "pointer", opacity: !ticker ? 0.5 : 1, fontSize: "12px" }}
     >
-      {isAnalyzing ? (
-        <>
-          <span
-            className="inline-block w-3 h-3 rounded-full border-2"
-            style={{
-              borderColor: "transparent var(--accent) var(--accent) transparent",
-              animation: "spin 0.8s linear infinite",
-            }}
-          />
-          Analyzing...
-        </>
-      ) : (
-        <>
-          <span>🤖</span>
-          Analyze
-        </>
-      )}
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      {isAnalyzing
+        ? <><span className="spin" style={{ width: "10px", height: "10px", borderRadius: "50%", border: "2px solid transparent", borderTopColor: "var(--accent)", display: "inline-block" }} /> Analyzing...</>
+        : <><span>🤖</span> Analyze</>
+      }
     </button>
   );
 }

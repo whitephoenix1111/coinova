@@ -178,8 +178,10 @@ setIsConnected, reset
 - [x] WatchList.tsx
 - [~~] TradeList.tsx — REMOVED (feature dropped)
 - [x] AIAnalysisModal.tsx
-- [ ] lib/binance.ts
-- [ ] lib/groq.ts
-- [ ] api/history/route.ts
-- [ ] api/analysis/route.ts
-- [ ] page.tsx (gắn kết)
+- [x] lib/binance.ts
+- [x] lib/groq.ts
+- [x] api/history/route.ts
+- [x] api/analysis/route.ts
+- [x] page.tsx (gắn kết)
+- [x] components/dashboard/Dashboard.tsx (client init wrapper)
+- [x] system_config.json (Groq prompt template)
