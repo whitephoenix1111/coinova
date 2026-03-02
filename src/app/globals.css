@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+/* ============================================================
+   COINOVA — Design System
+   Aesthetic: Terminal-grade dark UI, industrial precision
+   Font: JetBrains Mono (mono display) + IBM Plex Sans (body)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Base */
+  --bg-base: #080b0f;
+  --bg-panel: #0d1117;
+  --bg-elevated: #131920;
+  --bg-hover: #1a2330;
+  --bg-active: #1f2d3d;
+
+  /* Borders */
+  --border-subtle: #1e2a35;
+  --border-default: #253040;
+  --border-strong: #2e3d50;
+
+  /* Text */
+  --text-primary: #e8edf2;
+  --text-secondary: #7a8fa6;
+  --text-tertiary: #4a5a6a;
+  --text-muted: #2e3d50;
+
+  /* Accent — cyan/teal terminal feel */
+  --accent: #00d4ff;
+  --accent-dim: #0099bb;
+  --accent-glow: rgba(0, 212, 255, 0.15);
+
+  /* Semantic */
+  --green: #00e676;
+  --green-dim: #00b356;
+  --green-bg: rgba(0, 230, 118, 0.08);
+  --red: #ff3d5a;
+  --red-dim: #cc1f3a;
+  --red-bg: rgba(255, 61, 90, 0.08);
+  --yellow: #ffc107;
+  --yellow-bg: rgba(255, 193, 7, 0.08);
+
+  /* Fonts */
+  --font-display: 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
+
+/* Utility */
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+.text-green   { color: var(--green); }
+.text-red     { color: var(--red); }
+.text-accent  { color: var(--accent); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted   { color: var(--text-tertiary); }
+
+/* Panel base */
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Glow effects */
+.glow-green { text-shadow: 0 0 8px rgba(0, 230, 118, 0.5); }
+.glow-red   { text-shadow: 0 0 8px rgba(255, 61, 90, 0.5); }
+.glow-accent { text-shadow: 0 0 8px rgba(0, 212, 255, 0.4); }
+
+/* Animated price flash */
+@keyframes flash-green {
+  0%   { background: var(--green-bg); }
+  100% { background: transparent; }
+}
+@keyframes flash-red {
+  0%   { background: var(--red-bg); }
+  100% { background: transparent; }
+}
+.flash-green { animation: flash-green 0.4s ease-out; }
+.flash-red   { animation: flash-red 0.4s ease-out; }
+
+/* Ticker scroll */
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  animation: ticker-scroll 60s linear infinite;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Modal backdrop */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Pulse dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+.pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
