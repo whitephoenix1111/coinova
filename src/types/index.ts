@@ -121,6 +121,7 @@ export interface DashboardState {
   aiAnalysis: AIAnalysisResult | null;
   isAnalyzing: boolean;
   isModalOpen: boolean;
+  analysisError: string | null;
 
   // Connection status
   isConnected: boolean;

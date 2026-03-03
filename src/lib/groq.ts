@@ -65,7 +65,7 @@ function buildUserPrompt(
     .replace(/{highPrice}/g, ticker.highPrice)
     .replace(/{lowPrice}/g, ticker.lowPrice)
     .replace(/{volume}/g, ticker.volume)
-    .replace(/{baseAsset}/g, ticker.baseAsset)
+    .replace(/{baseAsset}/g, ticker.baseAsset ?? symbol.replace("USDT", "").replace("BTC", ""))
     .replace(/{topBids}/g, topBids)
     .replace(/{topAsks}/g, topAsks)
     .replace(/{spread}/g, spread)

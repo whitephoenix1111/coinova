@@ -26,11 +26,13 @@ interface DashboardActions {
 
   // Watchlist
   setWatchList: (watchList: WatchListItem[]) => void;
+  updateWatchListItem: (symbol: string, price: string, priceChangePercent: string) => void;
   toggleFavorite: (symbol: string) => void;
 
   // AI Analysis
   setAIAnalysis: (result: AIAnalysisResult) => void;
   setIsAnalyzing: (isAnalyzing: boolean) => void;
+  setAnalysisError: (error: string | null) => void;
   openModal: () => void;
   closeModal: () => void;
 
@@ -51,6 +53,7 @@ const initialState: DashboardState = {
   aiAnalysis: null,
   isAnalyzing: false,
   isModalOpen: false,
+  analysisError: null,
   isConnected: false,
 };
 
@@ -84,6 +87,14 @@ export const useDashboardStore = create<DashboardState & DashboardActions>(
 
     // Watchlist
     setWatchList: (watchList) => set({ watchList }),
+    updateWatchListItem: (symbol, price, priceChangePercent) =>
+      set((state) => ({
+        watchList: state.watchList.map((item) =>
+          item.symbol === symbol
+            ? { ...item, price, priceChangePercent }
+            : item
+        ),
+      })),
     toggleFavorite: (symbol) =>
       set((state) => ({
         watchList: state.watchList.map((item) =>
@@ -94,10 +105,11 @@ export const useDashboardStore = create<DashboardState & DashboardActions>(
       })),
 
     // AI Analysis
-    setAIAnalysis: (aiAnalysis) => set({ aiAnalysis }),
+    setAIAnalysis: (aiAnalysis) => set({ aiAnalysis, analysisError: null }),
     setIsAnalyzing: (isAnalyzing) => set({ isAnalyzing }),
+    setAnalysisError: (analysisError) => set({ analysisError }),
     openModal: () => set({ isModalOpen: true }),
-    closeModal: () => set({ isModalOpen: false }),
+    closeModal: () => set({ isModalOpen: false, analysisError: null }),
 
     // Connection
     setIsConnected: (isConnected) => set({ isConnected }),
