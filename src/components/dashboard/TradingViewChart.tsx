@@ -24,8 +24,9 @@
 //   → useEffect chạy lại → tạo widget mới với symbol mới
 // =============================================================================
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDashboardStore }  from "@/store/useDashboardStore";
+import CoinInfoPanel from "./CoinInfoPanel";
 
 // Khai báo global để TypeScript biết window.TradingView tồn tại sau khi script load
 // any vì TradingView không có official type definitions
@@ -176,40 +177,60 @@ function TVWidget({ symbol }: { symbol: string }) {
 // =============================================================================
 export default function TradingViewChart() {
   const activeSymbol = useDashboardStore((s) => s.activeSymbol);
+  const [activeTab, setActiveTab] = useState<"chart" | "info">("chart");
+
+  const TABS = [
+    { id: "chart" as const, label: "Chart" },
+    { id: "info"  as const, label: "Thông tin" },
+  ];
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", background: "var(--bg-panel)", display: "flex", flexDirection: "column" }}>
 
-      {/* ── Tab bar: 36px, nằm trên chart ── */}
+      {/* ── Tab bar ── */}
       <div style={{ display: "flex", alignItems: "center", gap: "4px", padding: "14px 12px", flexShrink: 0, borderBottom: "1px solid var(--border-subtle)", background: "var(--bg-elevated)", position: "relative", zIndex: 10 }}>
-        {/* 3 tab: chỉ index 0 (Chart) có style active */}
-        {["Chart", "Thông tin"].map((tab, i) => (
-          <button key={tab} style={{
-            fontFamily:  "var(--font-display)",
-            fontWeight:  500,
-            fontSize:    "12px",
-            padding:     "4px 12px",
-            borderRadius: "4px",
-            color:       i === 0 ? "var(--accent)"          : "var(--text-secondary)",
-            background:  i === 0 ? "var(--accent-glow)"     : "transparent",
-            border:      i === 0 ? "1px solid rgba(0,212,255,0.2)" : "1px solid transparent",
-            cursor:      "pointer",
-          }}>
-            {tab}
-          </button>
-        ))}
+        {TABS.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                fontFamily:   "var(--font-display)",
+                fontWeight:   500,
+                fontSize:     "12px",
+                padding:      "4px 12px",
+                borderRadius: "4px",
+                color:        isActive ? "var(--accent)"              : "var(--text-secondary)",
+                background:   isActive ? "var(--accent-glow)"         : "transparent",
+                border:       isActive ? "1px solid rgba(0,212,255,0.2)" : "1px solid transparent",
+                cursor:       "pointer",
+                transition:   "color 0.15s, background 0.15s, border-color 0.15s",
+              }}
+            >
+              {tab.label}
+            </button>
+          );
+        })}
 
-        {/* Spacer: đẩy AnalyzeButton sang phải */}
+        {/* Spacer */}
         <div style={{ flex: 1 }} />
 
-        {/* Nút Analyze: tự lấy state từ store, tự gọi API — không cần prop */}
-        <AnalyzeButton />
+        {/* Nút Analyze: chỉ hiện khi ở tab Chart */}
+        {activeTab === "chart" && <AnalyzeButton />}
       </div>
 
-      {/* ── TradingView Widget ──
-          key=activeSymbol: force remount khi symbol thay đổi
-          Đây là cách duy nhất để đổi symbol vì TradingView widget không có setSymbol() API */}
-      <TVWidget key={activeSymbol} symbol={activeSymbol} />
+      {/* ── Tab content ── */}
+      {/* TVWidget luôn mount (display none khi ẩn) để tránh reload widget khi đổi tab */}
+      <div style={{ flex: 1, minHeight: 0, display: activeTab === "chart" ? "flex" : "none", flexDirection: "column" }}>
+        <TVWidget key={activeSymbol} symbol={activeSymbol} />
+      </div>
+
+      {activeTab === "info" && (
+        <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", animation: "fadeIn 0.2s ease" }}>
+          <CoinInfoPanel />
+        </div>
+      )}
     </div>
   );
 }

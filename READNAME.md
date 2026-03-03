@@ -27,9 +27,10 @@ Dự án **không có và không cần database** vì toàn bộ data đều là
 - **Kết quả AI** — là snapshot phân tích tại một thời điểm cụ thể, gắn với mức giá lúc đó, không có giá trị sử dụng lại
 - **Watchlist** — danh sách coin cố định, không có tính năng yêu thích hay tuỳ chỉnh, không cần lưu
 
-Hai thứ duy nhất được lưu trên disk là **file cấu hình của developer**, không phải user data:
+Ba thứ được lưu trên disk là **file cấu hình của developer**, không phải user data:
 - `system_config.json` — prompt template cho AI, developer chỉnh khi muốn thay đổi hành vi phân tích
 - `.env.local` — chứa `GROQ_API_KEY`, không bao giờ commit lên Git
+- `public/coin_meta.json` — metadata tĩnh các coin, được generate bởi `scripts/fetch-coin-meta.mjs`, commit vào repo, Vercel serve như static file
 
 ---
 
@@ -46,6 +47,9 @@ Hai thứ duy nhất được lưu trên disk là **file cấu hình của devel
        |
        |--- (C) Groq AI API (llama-3.3-70b-versatile)
        |         Nhận market data → trả AIAnalysisResult JSON (tiếng Việt)
+       |
+       |--- (D) public/coin_meta.json (static file, served by Vercel)
+       |         Metadata tĩnh: tên, mô tả, supply, ATH, links — fetch 1 lần per session
 
 [ NEXT.JS APP ]
        |
@@ -58,6 +62,9 @@ Hai thứ duy nhất được lưu trên disk là **file cấu hình của devel
        |    |-- /api/history       → proxy (B) tránh CORS, trả depth snapshot
        |    |-- /api/analysis      → nhận payload từ client, giấu GROQ_API_KEY,
        |                             đọc system_config.json, gọi (C), trả JSON
+       |
+       |-- [ STATIC ]
+       |    |-- /coin_meta.json    → (D) served trực tiếp bởi Next.js/Vercel, không qua API route
 
 [ KHÔNG CÓ PERSISTENCE ]
        Không có database, không có localStorage, không có data.json.
@@ -105,6 +112,10 @@ Hai thứ duy nhất được lưu trên disk là **file cấu hình của devel
 COINOVA/
 ├── .env.local                        # GROQ_API_KEY — không commit
 ├── system_config.json                # Prompt template cho Groq AI
+├── public/
+│   └── coin_meta.json                # Metadata tĩnh các coin (fetch từ CoinGecko 1 lần, commit vào repo)
+├── scripts/
+│   └── fetch-coin-meta.mjs           # Script fetch CoinGecko → tạo coin_meta.json (chạy thủ công trước deploy)
 │
 └── src/
     ├── app/
@@ -120,7 +131,8 @@ COINOVA/
     │   ├── HeaderTicker.tsx          # Thanh trên: symbol, giá, 24h stats
     │   ├── BottomTicker.tsx          # Thanh cuộn ngang dưới: các coin phụ
     │   ├── OrderBook.tsx             # Cột trái: bids/asks real-time
-    │   ├── TradingViewChart.tsx      # Cột giữa: TV widget + tab bar + nút Analyze
+    │   ├── TradingViewChart.tsx      # Cột giữa: TV widget + tab bar (Chart / Thông tin) + nút Analyze
+    │   ├── CoinInfoPanel.tsx         # Tab "Thông tin": stats real-time + metadata tĩnh từ coin_meta.json
     │   ├── WatchList.tsx             # Cột phải: danh sách coin để chuyển nhanh
     │   └── AIAnalysisModal.tsx       # Modal kết quả AI (4 state: loading/success/error/empty)
     │
@@ -155,7 +167,14 @@ Thanh cuộn ngang liên tục ở cuối màn hình, hiển thị giá và % th
 Cột trái hiển thị bids (lệnh mua, màu xanh) và asks (lệnh bán, màu đỏ) real-time. Được hydrate ngay lập tức từ REST snapshot lúc kết nối, sau đó cập nhật liên tục qua `@depth20@100ms` WebSocket stream.
 
 ### TradingViewChart
-Cột giữa. Nhúng TradingView widget bằng DOM imperative (không phải React component) vì TV widget inject iframe vào container div. Dùng `key=activeSymbol` để force remount khi đổi coin. Tab bar phía trên dùng `flex column` layout, padding quyết định chiều cao (không hardcode height). Chứa nút Analyze.
+Cột giữa. Nhúng TradingView widget bằng DOM imperative (không phải React component) vì TV widget inject iframe vào container div. Dùng `key=activeSymbol` để force remount khi đổi coin. Tab bar có 2 tab: **Chart** và **Thông tin** — switching dùng `useState`, TVWidget dùng `display: none` khi ẩn (không unmount) để tránh reload chart mỗi lần đổi tab. Nút Analyze chỉ hiện ở tab Chart.
+
+### CoinInfoPanel
+Tab "Thông tin" trong TradingViewChart. Hiển thị thông tin chi tiết của coin đang xem, gồm 2 lớp data:
+- **Real-time từ Binance** (qua Zustand store): giá, % thay đổi, high/low 24h, volume, biến động, momentum, volume dominance, order book pressure
+- **Metadata tĩnh từ `public/coin_meta.json`**: tên, mô tả, category, năm ra mắt, hashing algorithm, max supply, circulating supply, market cap, ATH, links
+
+Fetch `coin_meta.json` một lần duy nhất rồi cache vào `fileRef`, không bao giờ call CoinGecko trong runtime. Per-coin cache dùng `metaCacheRef` (Map) — đổi tab qua lại không fetch lại.
 
 ### WatchList
 Cột phải, danh sách các cặp tiền để chuyển symbol nhanh. Click vào một item gọi `setActiveSymbol()` → store reset ticker/orderbook/trades → WebSocket reconnect với symbol mới → TradingView widget remount.

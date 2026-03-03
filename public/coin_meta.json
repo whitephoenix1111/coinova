@@ -1,0 +1,472 @@
+{
+  "BTC": {
+    "id": "bitcoin",
+    "symbol": "BTC",
+    "name": "Bitcoin",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": "SHA-256",
+    "genesisDate": "2009-01-03",
+    "launchYear": 2009,
+    "description": "Bitcoin is the world's first decentralized cryptocurrency, created in 2009 by the pseudonymous Satoshi Nakamoto. It enables peer-to-peer electronic cash transactions without intermediaries like banks or governments, operating on a blockchain secured by Proof of Work mining and the SHA-256 cryptographic algorithm.   With a fixed supply cap of 21 million coins and programmatic halvings every four years that reduce miner rewards, Bitcoin is designed as a deflationary digital asset often called \"digital gold.\" Its value stems from solving the double-spending problem without trusted intermediaries,",
+    "links": [
+      {
+        "label": "bitcoin.org",
+        "url": "http://www.bitcoin.org",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://bitcoin.org/bitcoin.pdf",
+        "icon": "📄"
+      },
+      {
+        "label": "mempool.space",
+        "url": "https://mempool.space/",
+        "icon": "🔍"
+      },
+      {
+        "label": "btc.com",
+        "url": "https://btc.com/",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/Bitcoin/",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/bitcoin",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "21.00M BTC",
+    "circulatingSupply": "20.00M BTC",
+    "marketCap": "$1.34T",
+    "ath": "$126,080",
+    "athDate": "2025-10-06",
+    "fetchedAt": "2026-03-03T13:26:34.764Z"
+  },
+  "ETH": {
+    "id": "ethereum",
+    "symbol": "ETH",
+    "name": "Ethereum",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": "Ethash",
+    "genesisDate": "2015-07-30",
+    "launchYear": 2015,
+    "description": "Ethereum is a global, open-source platform for decentralized applications. In other words, it is a decentralized blockchain platform that enables developers to build and deploy smart contracts and applications without central authority control. Unlike Bitcoin, which primarily functions as digital currency, Ethereum operates as a programmable global computer where developers can create any type of decentralized service.   The platform hosts over $14 billion in DeFi applications with hundreds of thousands of active users across financial protocols, NFT marketplaces, and gaming platforms. Its tra",
+    "links": [
+      {
+        "label": "ethereum.org",
+        "url": "https://www.ethereum.org/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://ethereum.org/whitepaper/",
+        "icon": "📄"
+      },
+      {
+        "label": "etherscan.io",
+        "url": "https://etherscan.io/",
+        "icon": "🔍"
+      },
+      {
+        "label": "platform.arkhamintelligence.com",
+        "url": "https://platform.arkhamintelligence.com/explorer/token/ethereum",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/ethereum",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/ethereum",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "Không giới hạn",
+    "circulatingSupply": "120.69M ETH",
+    "marketCap": "$236.31B",
+    "ath": "$4,946.05",
+    "athDate": "2025-08-24",
+    "fetchedAt": "2026-03-03T13:26:36.860Z"
+  },
+  "BNB": {
+    "id": "binancecoin",
+    "symbol": "BNB",
+    "name": "BNB",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": null,
+    "genesisDate": "2017-07-08",
+    "launchYear": 2017,
+    "description": "Binance Coin is the cryptocurrency of the Binance platform. It is a trading platform exclusively for cryptocurrencies. The name \"Binance\" is a combination of binary and finance.  Thus, the startup name shows that only cryptocurrencies can be traded against each other. It is not possible to trade crypto currencies against Fiat. The platform achieved an enormous success within a very short time and is focused on worldwide market with Malta headquarters. The cryptocurrency currently has a daily trading volume of 1.5 billion - 2 billion US dollars and is still increasing.  In total, there will onl",
+    "links": [
+      {
+        "label": "binance.com",
+        "url": "https://www.binance.com",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://github.com/bnb-chain/whitepaper/blob/master/WHITEPAPER.md",
+        "icon": "📄"
+      },
+      {
+        "label": "bscscan.com",
+        "url": "https://bscscan.com",
+        "icon": "🔍"
+      },
+      {
+        "label": "intel.arkm.com",
+        "url": "https://intel.arkm.com/explorer/token/binancecoin",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/binance",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/binance",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "200.00M BNB",
+    "circulatingSupply": "136.36M BNB",
+    "marketCap": "$85.41B",
+    "ath": "$1,369.99",
+    "athDate": "2025-10-13",
+    "fetchedAt": "2026-03-03T13:26:39.048Z"
+  },
+  "SOL": {
+    "id": "solana",
+    "symbol": "SOL",
+    "name": "Solana",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "Solana is a high-performance Layer 1 blockchain designed for mass adoption by providing a fast, secure, and low-cost environment for decentralized applications. It distinguishes itself by scaling globally without the use of complex sharding or multiple layers, instead maintaining a single, unified ledger to avoid liquidity fragmentation. This architecture allows it to process thousands of transactions per second with sub-second finality, often at a cost of less than a penny per transaction.  The network operates on a unique hybrid model that combines Proof of Stake with an innovation called Pr",
+    "links": [
+      {
+        "label": "solana.com",
+        "url": "https://solana.com/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://solana.com/solana-whitepaper.pdf",
+        "icon": "📄"
+      },
+      {
+        "label": "solscan.io",
+        "url": "https://solscan.io/",
+        "icon": "🔍"
+      },
+      {
+        "label": "platform.arkhamintelligence.com",
+        "url": "https://platform.arkhamintelligence.com/explorer/token/solana",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/solana",
+        "icon": "💬"
+      }
+    ],
+    "maxSupply": "Không giới hạn",
+    "circulatingSupply": "569.77M SOL",
+    "marketCap": "$47.87B",
+    "ath": "$293.31",
+    "athDate": "2025-01-19",
+    "fetchedAt": "2026-03-03T13:26:40.897Z"
+  },
+  "XRP": {
+    "id": "ripple",
+    "symbol": "XRP",
+    "name": "XRP",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "Ripple is the catchall name for the cryptocurrency platform, the transactional protocol for which is actually XRP, in the same fashion as Ethereum is the name for the platform that facilitates trades in Ether. Like other cryptocurrencies, Ripple is built atop the idea of a distributed ledger network which requires various parties to participate in validating transactions, rather than any singular centralized authority. That facilitates transactions all over the world, and transfer fees are far cheaper than the likes of bitcoin. Unlike other cryptocurrencies, XRP transfers are effectively immed",
+    "links": [
+      {
+        "label": "ripple.com",
+        "url": "https://ripple.com/currency/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://xrpl.org/docs",
+        "icon": "📄"
+      },
+      {
+        "label": "xrpscan.com",
+        "url": "https://xrpscan.com/",
+        "icon": "🔍"
+      },
+      {
+        "label": "bithomp.com",
+        "url": "https://bithomp.com/explorer/",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/ripple",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/Ripple",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "100.00B XRP",
+    "circulatingSupply": "61.09B XRP",
+    "marketCap": "$82.54B",
+    "ath": "$3.65",
+    "athDate": "2025-07-18",
+    "fetchedAt": "2026-03-03T13:26:42.759Z"
+  },
+  "NEAR": {
+    "id": "near",
+    "symbol": "NEAR",
+    "name": "NEAR Protocol",
+    "category": "Andreessen Horowitz (a16z) Portfolio",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "NEAR Protocol is the blockchain for AI. A high-performance, AI-native platform built to power the next generation of decentralized applications and intelligent agents. It provides the infrastructure AI needs to transact, operate, and interact across Web2 and Web3. NEAR combines three core elements: User-Owned AI, which ensures agents act in users’ best interests; Intents and Chain Abstraction, which eliminate blockchain complexity for seamless, goal-driven transactions across chains; and a sharded blockchain architecture that delivers the scalability, speed, and low-cost execution needed for r",
+    "links": [
+      {
+        "label": "near.org",
+        "url": "https://near.org/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://near.org/papers/the-official-near-white-paper/",
+        "icon": "📄"
+      },
+      {
+        "label": "nearblocks.io",
+        "url": "https://nearblocks.io",
+        "icon": "🔍"
+      },
+      {
+        "label": "intel.arkm.com",
+        "url": "https://intel.arkm.com/explorer/token/near",
+        "icon": "🔍"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/nearprotocol",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "Không giới hạn",
+    "circulatingSupply": "1.29B NEAR",
+    "marketCap": "$1.73B",
+    "ath": "$20.44",
+    "athDate": "2022-01-16",
+    "fetchedAt": "2026-03-03T13:28:45.269Z"
+  },
+  "DOGE": {
+    "id": "dogecoin",
+    "symbol": "DOGE",
+    "name": "Dogecoin",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": "Scrypt",
+    "genesisDate": "2013-12-08",
+    "launchYear": 2013,
+    "description": "Dogecoin is a cryptocurrency based on the popular \"Doge\" Internet meme and features a Shiba Inu on its logo. Dogecoin is a Litecoin fork. Introduced as a \"joke currency\" on 6 December 2013, Dogecoin quickly developed its own online community and reached a capitalization of US$60 million in January 2014. Compared with other cryptocurrencies, Dogecoin had a fast initial coin production schedule: 100 billion coins were in circulation by mid-2015, with an additional 5.256 billion coins every year thereafter. As of 30 June 2015, the 100 billionth Dogecoin had been mined.   Dogecoin was created by B",
+    "links": [
+      {
+        "label": "dogecoin.com",
+        "url": "http://dogecoin.com/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://dogecoin.com/dogepedia/",
+        "icon": "📄"
+      },
+      {
+        "label": "dogechain.info",
+        "url": "http://dogechain.info/chain/Dogecoin",
+        "icon": "🔍"
+      },
+      {
+        "label": "oklink.com",
+        "url": "https://www.oklink.com/doge",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/dogecoin/",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/dogecoin",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "Không giới hạn",
+    "circulatingSupply": "168.94B DOGE",
+    "marketCap": "$15.20B",
+    "ath": "$0.732",
+    "athDate": "2021-05-08",
+    "fetchedAt": "2026-03-03T13:28:47.634Z"
+  },
+  "ADA": {
+    "id": "cardano",
+    "symbol": "ADA",
+    "name": "Cardano",
+    "category": "GMCI 30 Index",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "Cardano is a blockchain platform built on academic research that enables smart contracts and decentralized applications while using significantly less energy than traditional cryptocurrencies like Bitcoin.   What sets Cardano apart is its methodical, research-driven approach — every major feature is peer-reviewed by scientists and cryptographers before being added to the network. This careful process aims to create a more secure and stable foundation compared to platforms that prioritize speed over thorough testing. The platform's native cryptocurrency, ADA, is used to send money, pay transact",
+    "links": [
+      {
+        "label": "cardano.org",
+        "url": "https://cardano.org/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://docs.cardano.org/introduction",
+        "icon": "📄"
+      },
+      {
+        "label": "cardanoscan.io",
+        "url": "https://cardanoscan.io/",
+        "icon": "🔍"
+      },
+      {
+        "label": "cardanoexplorer.com",
+        "url": "https://cardanoexplorer.com/",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/cardano",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/Cardano_CF",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "45.00B ADA",
+    "circulatingSupply": "36.82B ADA",
+    "marketCap": "$9.72B",
+    "ath": "$3.09",
+    "athDate": "2021-09-02",
+    "fetchedAt": "2026-03-03T13:28:49.872Z"
+  },
+  "AVAX": {
+    "id": "avalanche-2",
+    "symbol": "AVAX",
+    "name": "Avalanche",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "Avalanche is a high throughput smart contract blockchain platform. Validators secure the network through a proof-of-stake consensus protocol. It is said to be fast, low cost, and environmental friendly.",
+    "links": [
+      {
+        "label": "avax.network",
+        "url": "https://www.avax.network",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://cdn.prod.website-files.com/5d80307810123f5ffbb34d6e/6008d7bbf8b10d1eb01e7e16_Avalanche%20Platform%20Whitepaper.pdf",
+        "icon": "📄"
+      },
+      {
+        "label": "snowtrace.io",
+        "url": "https://snowtrace.io/",
+        "icon": "🔍"
+      },
+      {
+        "label": "platform.arkhamintelligence.com",
+        "url": "https://platform.arkhamintelligence.com/explorer/token/avalanche-2",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/Avax",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/avax",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "720.00M AVAX",
+    "circulatingSupply": "431.77M AVAX",
+    "marketCap": "$3.89B",
+    "ath": "$144.96",
+    "athDate": "2021-11-21",
+    "fetchedAt": "2026-03-03T13:28:52.047Z"
+  },
+  "DOT": {
+    "id": "polkadot",
+    "symbol": "DOT",
+    "name": "Polkadot",
+    "category": "Smart Contract Platform",
+    "hashingAlgorithm": null,
+    "genesisDate": null,
+    "launchYear": null,
+    "description": "Polkadot is a platform that allows diverse blockchains to transfer messages, including value, in a trust-free fashion; sharing their unique features while pooling their security. In brief, Polkadot is a scalable heterogeneous multi-chain technology.  Polkadot is heterogeneous because it is entirely flexible and makes no assumption about the nature or structure of the chains in the network. Even non-blockchain systems or data structures can become parachains if they fulfill a set of criteria.  Polkadot may be considered equivalent to a set of independent chains (e.g. a set containing Ethereum, ",
+    "links": [
+      {
+        "label": "polkadot.com",
+        "url": "https://polkadot.com/",
+        "icon": "🌐"
+      },
+      {
+        "label": "Whitepaper",
+        "url": "https://polkadot.com/papers/Polkadot-whitepaper.pdf",
+        "icon": "📄"
+      },
+      {
+        "label": "polkadot.subscan.io",
+        "url": "https://polkadot.subscan.io/",
+        "icon": "🔍"
+      },
+      {
+        "label": "mintscan.io",
+        "url": "https://www.mintscan.io/secret/address/secret1h5d3555tz37crrgl5rppu2np2fhaugq3q8yvv9",
+        "icon": "🔍"
+      },
+      {
+        "label": "Reddit",
+        "url": "https://www.reddit.com/r/Polkadot",
+        "icon": "💬"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter.com/Polkadot",
+        "icon": "🐦"
+      }
+    ],
+    "maxSupply": "2.10B DOT",
+    "circulatingSupply": "1.67B DOT",
+    "marketCap": "$2.49B",
+    "ath": "$54.98",
+    "athDate": "2021-11-04",
+    "fetchedAt": "2026-03-03T13:28:54.356Z"
+  }
+}
